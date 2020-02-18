@@ -35,4 +35,8 @@ public class Pessoas {
                     return query.getResultList();
     }
     
+    public void salvar(Pessoa pessoa){
+        manager.merge(pessoa);
+    }
+    
 }

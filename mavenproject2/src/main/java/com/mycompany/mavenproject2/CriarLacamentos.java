@@ -8,11 +8,11 @@ package com.mycompany.mavenproject2;
 import com.mycompany.mavenproject2.model.Lancamento;
 import com.mycompany.mavenproject2.model.Pessoa;
 import com.mycompany.mavenproject2.model.TipoLancamento;
+import com.mycompany.mavenproject2.repository.Pessoas;
 import com.mycompany.mavenproject2.util.JpaUtil;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 
 /**
  *
@@ -22,13 +22,16 @@ public class CriarLacamentos {
 
     public static void main(String[] args) {
         EntityManager manager = JpaUtil.getEntityManager();
-        EntityTransaction trx = manager.getTransaction();
+//        EntityTransaction trx = manager.getTransaction();
         
         Calendar dataVencimento1 = Calendar.getInstance();
         dataVencimento1.set(2020, 9, 1, 0, 0, 0);
+        
         Pessoa cliente = new Pessoa();
         cliente.setNome("Wagner Gonçalves de Jesus");
-
+        Pessoas pessoas = new Pessoas(manager);
+                pessoas.salvar(cliente);
+                
         Lancamento lancamento = new Lancamento();
         lancamento.setDescricao("Treinamento da Equipe");
         lancamento.setPessoa(cliente);
@@ -37,11 +40,11 @@ public class CriarLacamentos {
         lancamento.setValor(new BigDecimal(103_000));
         lancamento.setTipo(TipoLancamento.DESPESA);
 
-        trx.begin();
-        manager.persist(cliente);
+//        trx.begin();
+//        manager.persist(cliente);
         manager.persist(lancamento);
-        trx.commit();
-        manager.close();
+//        trx.commit();
+//        manager.close();
     }
 
 }
